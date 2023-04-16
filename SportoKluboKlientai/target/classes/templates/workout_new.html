@@ -21,24 +21,24 @@
   <div class="row mt-5">
     <div class="col-md-12">
       <div class="card bg-secondary">
-        <div class="card-header bg-dark">KLIENTAI</div>
+        <div class="card-header bg-dark">TRENIRUOTĖS</div>
         <div class="card-body">
-          <form method="post" action="/new">
+          <form method="post" action="/new/workout">
             <div class="mb-3">
-              <label class="form-label">Vardas</label>
+              <label class="form-label">Pavadinimas</label>
               <input type="text" class="form-control" name="name">
             </div>
             <div class="mb-3">
-              <label class="form-label">Pavardė</label>
-              <input type="text" class="form-control" name="surname">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-control" name="date">
             </div>
             <div class="mb-3">
-              <label class="form-label">El. paštas</label>
-              <input type="text" class="form-control" name="email">
+              <label class="form-label">Vietų skaičius</label>
+              <input type="number" class="form-control" name="places">
             </div>
             <div class="mb-3">
-              <label class="form-label">Tel. numeris</label>
-              <input type="text" class="form-control" name="phone">
+              <label class="form-label">Lokacija</label>
+              <input type="text" class="form-control" name="location">
             </div>
             <button class="btn btn-dark">Pridėti</button>
           </form>

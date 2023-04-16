@@ -2,6 +2,9 @@ package lt.jnin20.sportk.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
+
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -9,17 +12,20 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(length = 64)
     private String name;
 
-    @Column
+    @Column(length = 64)
     private String surname;
 
-    @Column
+    @Column(length = 128)
     private String email;
 
-    @Column
+    @Column(length = 64)
     private String phone;
+
+    @OneToMany(mappedBy = "client")
+    private List<Registration> registrations;
 
     public Client() {
     }
@@ -71,15 +77,23 @@ public class Client {
         this.phone = phone;
     }
 
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
+    }
+
     @Override
     public String toString() {
-        return "client{" +
+        return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", registrations=" + registrations +
                 '}';
     }
-
 }

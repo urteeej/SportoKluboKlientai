@@ -1,7 +1,9 @@
 package lt.jnin20.sportk.controllers;
 
 import lt.jnin20.sportk.entities.Client;
+import lt.jnin20.sportk.entities.Registration;
 import lt.jnin20.sportk.repositories.ClientRepository;
+import lt.jnin20.sportk.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,20 @@ public class ClientController {
     @Autowired
     public ClientRepository clientRepository;
 
+    @Autowired
+    public RegistrationRepository registrationRepository;
+
 
     @GetMapping("/")
     public String clients(Model model){
         List<Client> clients = clientRepository.findAll();
+        //for(Client c:clients){
+        //    System.out.println("Klientas: " + c.getName() + " " + c.getSurname());
+        //    for(Registration r:c.getRegistrations()){
+        //        System.out.println("Registracija: " + r.getWorkout().getName() + ", "
+        //                + r.getWorkout().getLocation() + ", " + r.getWorkout().getDate());
+        //    }
+        //}
         model.addAttribute("clients", clients);
         return "client_info_list";
     }
@@ -70,6 +82,10 @@ public class ClientController {
     public String delete(
             @PathVariable("id") Integer id
     ){
+        Client c = clientRepository.getReferenceById(id);
+        for(Registration r:c.getRegistrations()){
+            registrationRepository.deleteById(r.getId());
+        }
         clientRepository.deleteById(id);
         return "redirect:/";
     }

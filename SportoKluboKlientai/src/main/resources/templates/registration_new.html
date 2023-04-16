@@ -21,26 +21,22 @@
   <div class="row mt-5">
     <div class="col-md-12">
       <div class="card bg-secondary">
-        <div class="card-header bg-dark">KLIENTAI</div>
+        <div class="card-header bg-dark">REGISTRACIJA Į TRENIRUOTĘ</div>
         <div class="card-body">
-          <form method="post" action="/new">
+          <form method="post" action="/registration/new">
             <div class="mb-3">
-              <label class="form-label">Vardas</label>
-              <input type="text" class="form-control" name="name">
+              <label class="form-label">Klientas</label>
+              <select class="form-select" name="client_id">
+                <option th:each="client: ${clients}" th:text="${client.name} + ' ' + ${client.surname}"></option>
+              </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Pavardė</label>
-              <input type="text" class="form-control" name="surname">
+              <label class="form-label">Treniruotė</label>
+              <select class="form-select" name="workout_id">
+                <option th:each="workout: ${workouts}" th:text="${workout.name} + ', ' + ${workout.location} + ', ' + ${workout.date}"></option>
+              </select>
             </div>
-            <div class="mb-3">
-              <label class="form-label">El. paštas</label>
-              <input type="text" class="form-control" name="email">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Tel. numeris</label>
-              <input type="text" class="form-control" name="phone">
-            </div>
-            <button class="btn btn-dark">Pridėti</button>
+            <button class="btn btn-dark">Registruoti</button>
           </form>
 
         </div>
