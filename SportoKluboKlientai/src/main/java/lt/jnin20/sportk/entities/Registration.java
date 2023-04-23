@@ -1,6 +1,8 @@
 package lt.jnin20.sportk.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class Registration {
     @JoinColumn(name = "workout_id")
     private Workout workout;
 
+    @PastOrPresent
     @Column
     private LocalDate registration_date;
 

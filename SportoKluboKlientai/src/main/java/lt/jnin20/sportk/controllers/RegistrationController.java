@@ -1,5 +1,6 @@
 package lt.jnin20.sportk.controllers;
 
+import jakarta.validation.Valid;
 import lt.jnin20.sportk.entities.Client;
 import lt.jnin20.sportk.entities.Registration;
 import lt.jnin20.sportk.entities.Workout;
@@ -9,10 +10,8 @@ import lt.jnin20.sportk.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;

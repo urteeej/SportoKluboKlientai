@@ -1,6 +1,7 @@
 package lt.jnin20.sportk.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -13,15 +14,21 @@ public class Workout {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(min = 3, max = 20, message = "Pavadinimas turi būti 3-20 simbolių ilgio")
     @Column(length = 64)
     private String name;
 
+    @NotNull(message = "Įveskite treniruotės datą.")
+    @Future(message = "Pasirinkta data turi būti ateityje.")
     @Column
     private LocalDate date;
 
+    @NotNull(message = "Nurodykite vietų skaičių.")
+    @Max(value = 300, message = "Vietų skaičius negali viršyti 300.")
     @Column
     private Integer places;
 
+    @Size(min = 1, max = 40, message = "Lokacijos aprašymas turi būti 1-40 simbolių ilgio.")
     @Column
     private String location;
 

@@ -23,22 +23,34 @@
             <div class="card bg-secondary">
                 <div class="card-header bg-dark">TRENIRUOTĖS REDAGAVIMAS</div>
                 <div class="card-body">
-                    <form method="post" th:action="'/update/workout/'+${workout.id}">
+                    <form method="post" th:action="'/update/workout/'+${workout.id}" th:object="${workout}">
                         <div class="mb-3">
                             <label class="form-label">Pavadinimas</label>
-                            <input type="text" class="form-control" name="name" th:value="${workout.name}">
+                            <input type="text" class="form-control" name="name" th:value="*{name}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                                <span th:each="error:${#fields.errors('name')}" th:text="${error}"></span>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Date</label>
-                            <input type="date" class="form-control" name="date" th:value="${workout.date}">
+                            <input type="date" class="form-control" name="date" th:value="*{date}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('date')}">
+                                <span th:each="error:${#fields.errors('date')}" th:text="${error}"></span>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Vietų skaičius</label>
-                            <input type="number" class="form-control" name="places" th:value="${workout.places}">
+                            <input type="number" class="form-control" name="places" th:value="*{places}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('places')}">
+                                <span th:each="error:${#fields.errors('places')}" th:text="${error}"></span>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Lokacija</label>
-                            <input type="text" class="form-control" name="location" th:value="${workout.location}">
+                            <input type="text" class="form-control" name="location" th:value="*{location}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('location')}">
+                                <span th:each="error:${#fields.errors('location')}" th:text="${error}"></span>
+                            </div>
                         </div>
                         <button class="btn btn-dark">Išsaugoti</button>
                     </form>

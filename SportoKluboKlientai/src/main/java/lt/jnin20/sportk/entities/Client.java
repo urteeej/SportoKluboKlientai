@@ -1,6 +1,7 @@
 package lt.jnin20.sportk.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -12,15 +13,20 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(min = 3, max = 20, message = "Vardas turi būti 3-20 simbolių ilgio.")
     @Column(length = 64)
     private String name;
 
+    @Size(min = 3, max = 25, message = "Pavardė turi būti 3-25 simbolių ilgio.")
     @Column(length = 64)
     private String surname;
 
+    @NotEmpty(message = "Įveskite el. pašto adresą.")
+    @Email(message = "El. pašto adresas turi turėti '@' ženklą, jo dešinėje nurodant pašto serverio adresą (pvz. ku.lt), o kairėje - abonento vardą.")
     @Column(length = 128)
     private String email;
 
+    @Size(max = 15, message = "Telefono numeris turi būti ne ilgesnis nei 15 simbolių.")
     @Column(length = 64)
     private String phone;
 

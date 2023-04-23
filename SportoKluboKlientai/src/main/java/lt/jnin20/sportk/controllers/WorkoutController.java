@@ -1,5 +1,7 @@
 package lt.jnin20.sportk.controllers;
 
+import jakarta.validation.Valid;
+import lt.jnin20.sportk.entities.Client;
 import lt.jnin20.sportk.entities.Registration;
 import lt.jnin20.sportk.entities.Workout;
 import lt.jnin20.sportk.repositories.RegistrationRepository;
@@ -7,10 +9,8 @@ import lt.jnin20.sportk.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -39,19 +39,27 @@ public class WorkoutController {
     }
 
     @GetMapping("/new/workout")
-    public String newWorkout(){
+    public String newWorkout(Model m){
+        m.addAttribute("workout", new Workout());
         return "workout_new";
     }
 
     @PostMapping("/new/workout")
     public String storeWorkout(
-            @RequestParam("name") String name,
-            @RequestParam("date") LocalDate date,
-            @RequestParam("places") Integer places,
-            @RequestParam("location") String location
+            @Valid
+            @ModelAttribute
+            Workout workout,
+            BindingResult result
+            //@RequestParam("name") String name,
+            //@RequestParam("date") LocalDate date,
+            //@RequestParam("places") Integer places,
+            //@RequestParam("location") String location
     ){
-        Workout w = new Workout(name, date, places, location);
-        workoutRepository.save(w);
+        //Workout w = new Workout(name, date, places, location);
+        if(result.hasErrors()){
+            return "workout_new";
+        }
+        workoutRepository.save(workout);
         return "redirect:/workouts";
     }
 
@@ -67,19 +75,30 @@ public class WorkoutController {
 
     @PostMapping("/update/workout/{id}")
     public String saveWorkout(
-            @PathVariable("id") Integer id,
-            @RequestParam("name") String name,
-            @RequestParam("date") LocalDate date,
-            @RequestParam("places") Integer places,
-            @RequestParam("location") String location
+            @Valid
+            @ModelAttribute
+            Workout workout,
+            BindingResult result
+            //@PathVariable("id") Integer id,
+            //@RequestParam("name") String name,
+            //@RequestParam("date") LocalDate date,
+            //@RequestParam("places") Integer places,
+            //@RequestParam("location") String location
     ){
-        Workout w = workoutRepository.getReferenceById(id);
-        w.setName(name);
-        w.setDate(date);
-        w.setPlaces(places);
-        w.setLocation(location);
-        workoutRepository.save(w);
+        //Workout w = workoutRepository.getReferenceById(id);
+        //w.setName(name);
+        //w.setDate(date);
+        //w.setPlaces(places);
+        //w.setLocation(location);
+
+        if(result.hasErrors()){
+            return "workout_update";
+        }
+        workoutRepository.save(workout);
         return "redirect:/workouts";
+
+        //workoutRepository.save(w);
+        //return "redirect:/workouts";
     }
 
     @GetMapping("/delete/workout/{id}")
