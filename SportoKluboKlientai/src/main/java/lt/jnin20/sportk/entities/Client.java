@@ -30,6 +30,9 @@ public class Client {
     @Column(length = 64)
     private String phone;
 
+    @Column(length = 128, nullable = true)
+    private String agreement = null;
+
     @OneToMany(mappedBy = "client")
     private List<Registration> registrations;
 
@@ -81,6 +84,14 @@ public class Client {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAgreement() {
+        return agreement;
+    }
+
+    public void setAgreement(String agreement) {
+        this.agreement = agreement;
     }
 
     public List<Registration> getRegistrations() {

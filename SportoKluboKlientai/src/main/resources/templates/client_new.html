@@ -23,7 +23,7 @@
       <div class="card bg-secondary">
         <div class="card-header bg-dark">KLIENTAI</div>
         <div class="card-body">
-          <form method="post" action="/new" th:object="${client}">
+          <form method="post" action="/new" th:object="${client}" enctype="multipart/form-data">
             <!--
             <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
               <ul>
@@ -58,6 +58,10 @@
               <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}">
                 <span th:each="error:${#fields.errors('phone')}" th:text="${error}"></span>
               </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sutarties failas</label>
+              <input type="file" class="form-control" name="agreement">
             </div>
             <button class="btn btn-dark">Pridėti</button>
           </form>

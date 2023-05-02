@@ -54,6 +54,7 @@
                 <td>
                   <a th:href="'/update/'+${client.id}" class="btn btn-dark">REDAGUOTI</a>
                   <a th:href="'/delete/'+${client.id}" class="btn btn-dark">IŠTRINTI</a>
+                  <a th:if="${client.agreement!=null}" th:href="${'/'+client.id+'/agreement'}" class="btn btn-light">SUTARTIS</a>
                 </td>
               </tr>
             </tbody>

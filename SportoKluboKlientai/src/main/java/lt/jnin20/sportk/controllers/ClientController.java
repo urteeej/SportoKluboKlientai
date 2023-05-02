@@ -5,11 +5,16 @@ import lt.jnin20.sportk.entities.Client;
 import lt.jnin20.sportk.entities.Registration;
 import lt.jnin20.sportk.repositories.ClientRepository;
 import lt.jnin20.sportk.repositories.RegistrationRepository;
+import lt.jnin20.sportk.servicess.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,6 +27,8 @@ public class ClientController {
     @Autowired
     public RegistrationRepository registrationRepository;
 
+    @Autowired
+    public FileStorageService fileStorageService;
 
     @GetMapping("/")
     public String clients(Model model){
@@ -40,6 +47,7 @@ public class ClientController {
     @GetMapping("/new")
     public String newClient(Model model){
         model.addAttribute("client", new Client());
+        //this.fileStorageService.store(null, "dokumentas.pdf");
         return "client_new";
     }
 
@@ -48,13 +56,30 @@ public class ClientController {
         @Valid
         @ModelAttribute
         Client client,
-        BindingResult result
+        BindingResult result,
+        @RequestParam("agreement")MultipartFile agreement
     ){
         if(result.hasErrors()){
             return "client_new";
         }
+        client.setAgreement("sutartis" + client.getId().toString() + ".pdf");
         clientRepository.save(client);
+
+        fileStorageService.store(agreement, "sutartis" + client.getId().toString() + ".pdf");  //agreement.getOriginalFilename()
+
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}/agreement")
+    @ResponseBody
+    public ResponseEntity<Resource> getFile(@PathVariable Integer id){
+        Client c = clientRepository.getReferenceById(id);
+
+        Resource r = fileStorageService.loadFile(c.getId().toString());
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ c.getAgreement() +"\"")   //"sutartis.pdf"
+                .body(r);
     }
 
     @GetMapping("/update/{id}")
